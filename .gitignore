@@ -2,3 +2,4 @@
 .idea/
 clusterpredictor.iml
 target/
+src/main/resources/training-data.txt

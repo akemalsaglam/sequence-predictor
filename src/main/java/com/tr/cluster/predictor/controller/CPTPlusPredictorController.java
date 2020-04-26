@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/cptplus")
@@ -19,6 +20,10 @@ public class CPTPlusPredictorController implements BasePredictorController {
     @Override
     @PostMapping(path = "/")
     public String getPredictedCluster(@RequestBody List<Integer> clusters) {
-        return cptPlusPredictorService.predict(clusters);
+        String predictionResult = cptPlusPredictorService.predict(clusters);
+        System.out.println("cptPlus prediction executed. predicted data: "
+                + clusters.stream().map(Object::toString).collect(Collectors.joining(","))
+                + ", result: " + predictionResult);
+        return predictionResult;
     }
 }

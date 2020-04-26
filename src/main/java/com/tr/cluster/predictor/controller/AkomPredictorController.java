@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/akom")
-public class AkomPredictorController implements BasePredictorController{
+public class AkomPredictorController implements BasePredictorController {
 
     @Autowired
     private AkomPredictorService akomPredictorService;
@@ -19,6 +20,10 @@ public class AkomPredictorController implements BasePredictorController{
     @Override
     @PostMapping(path = "/")
     public String getPredictedCluster(@RequestBody List<Integer> clusters) {
-        return akomPredictorService.predict(clusters);
+        String predictionResult = akomPredictorService.predict(clusters);
+        System.out.println("akom prediction executed. predicted data: "
+                + clusters.stream().map(Object::toString).collect(Collectors.joining(","))
+                + ", result: " + predictionResult);
+        return predictionResult;
     }
 }

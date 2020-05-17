@@ -6,7 +6,7 @@ import java.net.URLDecoder;
 
 public class FileUtil {
 
-    private static final String TRAINING_DATA_FILE_NAME = "100taxi-month1-son.txt";
+    private static final String TRAINING_DATA_FILE_NAME = "100taxi-month1-40.txt";
 
     public static String getTrainDataFilePath() throws UnsupportedEncodingException {
         URL url = FileUtil.class.getClassLoader().getResource(TRAINING_DATA_FILE_NAME);

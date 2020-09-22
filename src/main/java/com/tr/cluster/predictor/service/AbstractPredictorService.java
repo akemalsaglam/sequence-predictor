@@ -14,6 +14,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class AbstractPredictorService<T extends Predictor> implements BasePredictorService {
 
@@ -27,8 +28,8 @@ public abstract class AbstractPredictorService<T extends Predictor> implements B
 
         Iterator var4 = trainingSet.getSequences().iterator();
 
-        while(var4.hasNext()) {
-            Sequence sequence = (Sequence)var4.next();
+        while (var4.hasNext()) {
+            Sequence sequence = (Sequence) var4.next();
             System.out.println(sequence.toString());
         }
         System.out.println();
@@ -84,7 +85,13 @@ public abstract class AbstractPredictorService<T extends Predictor> implements B
     public String predict(List<Integer> clusters) {
         Sequence sequence = convertClustersToSequence(clusters);
         Sequence nextCluster = this.predictor.Predict(sequence);
-        return nextCluster.getItems().get(0).toString();
+        if (nextCluster != null && nextCluster.getItems() != null && nextCluster.getItems().size() > 0) {
+            return nextCluster.getItems().get(0).toString();
+        } else {
+            System.out.println("result is null:" + clusters.stream().map(String::valueOf).collect(Collectors.joining(",")));
+            return null;
+        }
+
     }
 
     private Sequence convertClustersToSequence(List<Integer> clusters) {

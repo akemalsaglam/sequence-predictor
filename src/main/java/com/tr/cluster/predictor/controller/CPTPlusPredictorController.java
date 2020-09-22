@@ -20,6 +20,7 @@ public class CPTPlusPredictorController implements BasePredictorController {
     @Override
     @PostMapping(path = "/")
     public String getPredictedCluster(@RequestBody List<Integer> clusters) {
+        if(clusters.size() == 0) return null;
         String predictionResult = cptPlusPredictorService.predict(clusters);
         System.out.println("cptPlus prediction executed. predicted data: "
                 + clusters.stream().map(Object::toString).collect(Collectors.joining(","))
